@@ -360,7 +360,7 @@ namespace TSBStart
                 this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)delegate
                 {
                     labInfo.Content = "安装完成";
-                    btnStartOrUpdate.Content = "开始游戏";
+                    //btnStartOrUpdate.Content = "开始游戏";
                     btnStartOrUpdate.IsEnabled = true;
                 });
             }
@@ -437,16 +437,20 @@ namespace TSBStart
                 {
                     aUnzipTimer = new System.Timers.Timer(2000);
                     // 钩住定时器的 Elapsed 事件。
-                    aUnzipTimer.Elapsed += ATimer_Elapsed;
+                    aUnzipTimer.Elapsed += timer_unzip_and_check_update;
                 }
                 aUnzipTimer.AutoReset = false; // 设置为 false，以便只触发一次。
                 aUnzipTimer.Enabled = true;
             });
         }
 
-        private void ATimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        private void timer_unzip_and_check_update(object? sender, System.Timers.ElapsedEventArgs e)
         {
+            
+            //解压游戏
             UnZip();
+            //检测游戏是否存在，以及是否需要升级
+            checkGameExeExists();
         }
 
         private void Downloader_DownloadProgressChanged(object? sender, DownloadProgressChangedEventArgs e)
@@ -596,7 +600,7 @@ namespace TSBStart
                 {
                     aUnzipTimer = new System.Timers.Timer(2000);
                     // 钩住定时器的 Elapsed 事件。
-                    aUnzipTimer.Elapsed += ATimer_Elapsed;
+                    aUnzipTimer.Elapsed += timer_unzip_and_check_update;
                 }
                 aUnzipTimer.AutoReset = false; // 设置为 false，以便只触发一次。
                 aUnzipTimer.Enabled = true;
