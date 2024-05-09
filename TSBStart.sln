@@ -9,16 +9,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Patcher", "Patcher\Patcher.
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
+		
+		Release|x86 = Release|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+		
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|Any CPU.Build.0 = Debug|x64
+		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|Any CPU.Build.0 = Debug|x86
 		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|x64.ActiveCfg = Debug|x86
 		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|x64.Build.0 = Debug|x86
 		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Debug|x86.ActiveCfg = Debug|x86
@@ -29,8 +31,8 @@ Global
 		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Release|x64.Build.0 = Release|Any CPU
 		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Release|x86.ActiveCfg = Release|x86
 		{50AFE897-FC77-4153-8B80-1B5C53D0193B}.Release|x86.Build.0 = Release|x86
-		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|Any CPU.Build.0 = Debug|x64
+		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|Any CPU.Build.0 = Debug|Win32
 		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|x64.ActiveCfg = Debug|x64
 		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|x64.Build.0 = Debug|x64
 		{FEA1E82E-9883-4977-A8EA-8BECC6EEAF33}.Debug|x86.ActiveCfg = Debug|Win32
