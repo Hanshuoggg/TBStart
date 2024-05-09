@@ -33,11 +33,6 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Setup .NET SDK 4.6.1
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '4.6.1'
-
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
