@@ -100,6 +100,12 @@ namespace TSBStart
             StartPatchIfRequired();
 
             UpdateUIWhenPatchDone();
+
+
+            if(btnStartOrUpdate.Content.Equals("开始升级"))
+            {
+                btnStartOrUpdate_Click(null, null);
+            }
         }
 
         private void HandleGetFTPDone()
