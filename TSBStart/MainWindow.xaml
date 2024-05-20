@@ -38,8 +38,8 @@
 
                     <Button  Grid.Row="0" Grid.Column="0"  Name="btnStartOrUpdate" Click="btnStartOrUpdate_Click" FontSize="20" Margin="30,0,20,30" Grid.RowSpan="2" Visibility="Hidden">开始游戏</Button>
 
-                    <Label Grid.Row="0" Grid.Column="1" Content="" Name="labInfo" Margin="5,0,20,0" MaxWidth="14cm"></Label>
-                    <ProgressBar Grid.Row="1" Grid.Column="1" Name="m_progress" Width="14cm" Height="0.5cm" Margin="5,0,20,30"  ></ProgressBar>
+                    <Label Grid.Row="0" Grid.Column="1" Content="" Name="labInfo" Margin="5,0,20,0" MaxWidth="14cm" Visibility="Hidden"></Label>
+                    <ProgressBar Grid.Row="1" Grid.Column="1" Name="m_progress" Width="14cm" Height="0.5cm" Margin="5,0,20,30" Visibility="Hidden" ></ProgressBar>
 
 
                 </Grid>
@@ -48,7 +48,7 @@
             <Grid>
 
            
-                <Wpf:WebView2 Name="webBg" Margin="400,130,80,50"/>
+                <Wpf:WebView2 Name="webBg" Margin="370,130,80,50"/>
             </Grid>
 
         </DockPanel>
