@@ -6,6 +6,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using Patcher;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Xml.XPath;
 
 namespace TSBStart
 {
@@ -24,7 +26,7 @@ namespace TSBStart
             eSTEP_PATCH_DONE,
         };
 
-        private Config m_cfg = new();
+        public static  Config m_cfg = new();
         private Tools m_tool=new();
         private Zip7z m_z7 = new();
 
@@ -556,47 +558,51 @@ namespace TSBStart
             //调用厂商API校验帐号和密码是否有效
             return m_tool.verifyLogin(m_cfg.Account, m_cfg.Password);
         }
-        private bool? loginAccount()
-        {
-            try
-            {
-                //当前未登录，则弹出登录对话框进行登录
-                if(hasLogin()==false)
-                {
-                    WindowLogin wlogin=new();
-                    wlogin.Owner = this;
-                    bool? bret = (bool?)wlogin.ShowDialog();
-                    return bret;
-                }
-                else
-                {
-                    //当前已经有有效的帐号名和密码
-                    return true;
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-            return false;
-        }
+     
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             m_progress.Visibility = Visibility.Hidden;
             m_z7.Extracting += M_z7_Extracting;
 
-            if (loginAccount() == false) 
-            {
-                Close();
-
-            }
             checkGameExeExists();
 
             webBg.Source =new Uri( m_cfg.AccountVerifyUrl);
-            
+            webBg.NavigationCompleted += WebBg_NavigationCompleted;
 
+        }
+        private async void loginByWeb()
+        {
+            await webBg.EnsureCoreWebView2Async(null); // 确保WebView2已加载
 
+            try
+            {
+                //拼接js code
+                string js = String.Format("return login({0},{1});",m_cfg.Account,m_cfg.Password);
+                // 执行JavaScript代码并获取结果
+                string result = await webBg.ExecuteScriptAsync(js);
+                // 处理结果
+                MessageBox.Show(result);
+
+                if(result.Trim().Length>=1 && result.Trim()[0]=='1')
+                {
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理异常
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void WebBg_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            if (e.IsSuccess)
+            {
+                webBg.CoreWebView2.AddHostObjectToScript("host", new HostObject()); //向网页注册回调函数
+
+                loginByWeb();
+            }
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
@@ -649,6 +655,8 @@ namespace TSBStart
             }
         }
 
-     
+       
+
+
     }
 }

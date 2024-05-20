@@ -21,8 +21,6 @@ namespace TSBStart
     /// </summary>
     public partial class WindowInstDir : Window
     {
-
-        private Config m_cfg=new Config();
         private Tools m_tool=new Tools();
         public WindowInstDir()
         {
@@ -54,7 +52,7 @@ namespace TSBStart
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txtInsDir.Text = m_cfg.Inst_Dir;
+            txtInsDir.Text = MainWindow.m_cfg.Inst_Dir;
             refreshDiskSpaceInfo();
         }
 

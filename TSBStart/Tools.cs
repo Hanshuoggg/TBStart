@@ -12,8 +12,6 @@ namespace TSBStart
 {
     public class Tools
     {
-
-      
  
         public string get7zipPath()
         {
