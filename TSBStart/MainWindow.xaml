@@ -48,7 +48,7 @@
             <Grid>
 
            
-                <Wpf:WebView2 Name="webBg" Margin="370,130,80,50"/>
+                <Wpf:WebView2 Name="webBg" Margin="260,120,80,50"/>
             </Grid>
 
         </DockPanel>

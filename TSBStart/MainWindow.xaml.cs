@@ -642,7 +642,7 @@ namespace TSBStart
         {
             if (e.IsSuccess)
             {
-                webBg.CoreWebView2.AddHostObjectToScript("host", new HostObject()); //向网页注册回调函数
+                webBg.CoreWebView2.AddHostObjectToScript("host", new HostObject(this)); //向网页注册回调函数
 
                 web_login();
             }
