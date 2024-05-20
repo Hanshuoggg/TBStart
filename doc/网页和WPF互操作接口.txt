@@ -1,0 +1,48 @@
+网页中需提供javascript function 供外部wpf调用的:
+
+//传入用户名，密码，登录成功返回1，失败返回0
+int login(username,pwd) 
+
+//设置网页中按钮标题
+void set_btn_text(stext);
+
+//设置网页中按钮状态,0 禁用，1启用
+void set_btn_enable(istate);
+
+//设置进度提示信息
+void set_progress_info(stip)
+
+//设置当前进度
+void set_progress_num(inum);
+
+//获取下载游戏url
+string get_game_download_url()
+
+
+
+
+外部通过webivew2提供给网页javascript调用的（可假定已经实现直接调用）：
+
+//网页登录成功后给通知
+window.chrome.webview.host.LoginOK();
+
+//供网页设置下载游戏下载url
+window.chrome.webview.host.set_download_url(string url);
+
+//游戏是否存在,存在返回1，不存在返回0
+window.chrome.webview.host.existGame()
+
+//开始游戏
+window.chrome.webview.host.startGame(String username, String pwd);
+
+//最小化主窗口
+window.chrome.webview.host.MinWindow();
+
+//关闭主窗口
+window.chrome.webview.host.CloseWindow();
+
+//获取设备唯一id
+window.chrome.webview.host.appGetUuid();
+
+//由网页中按钮调用触发外部按钮事件（外部按钮隐藏）。 除登录外， 均应调用。  
+window.chrome.webview.host.btnStartOrUpdate_Click();
