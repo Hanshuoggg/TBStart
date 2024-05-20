@@ -8,6 +8,9 @@ using System.Windows.Interop;
 using Patcher;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Xml.XPath;
+using System.Runtime.InteropServices;
+using Microsoft.Web.WebView2.Wpf;
+using Microsoft.Web.WebView2.WinForms;
 
 namespace TSBStart
 {
@@ -566,11 +569,51 @@ namespace TSBStart
 
             checkGameExeExists();
 
-            webBg.Source =new Uri( m_cfg.AccountVerifyUrl);
+            webBg.EnsureCoreWebView2Async();
+            webBg.CoreWebView2InitializationCompleted += WebBg_CoreWebView2InitializationCompleted;
             webBg.NavigationCompleted += WebBg_NavigationCompleted;
 
+
+
         }
-        private async void loginByWeb()
+
+    
+
+        private void WebBg_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
+        {
+            if (e.IsSuccess)
+            {
+               webBg.DefaultBackgroundColor = System.Drawing.Color.Transparent;
+               webBg.Source = new Uri(m_cfg.AccountVerifyUrl);
+               
+            }
+        }
+
+        private async void web_setButtonText(string sText)
+        {
+            await webBg.EnsureCoreWebView2Async(null); // 确保WebView2已加载
+
+            try
+            {
+                //拼接js code
+                string js = String.Format("return set_btn_text({0});", sText);
+                // 执行JavaScript代码并获取结果
+                string result = await webBg.ExecuteScriptAsync(js);
+                // 处理结果
+                MessageBox.Show(result);
+
+                if (result.Trim().Length >= 1 && result.Trim()[0] == '1')
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理异常
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private async void web_login()
         {
             await webBg.EnsureCoreWebView2Async(null); // 确保WebView2已加载
 
@@ -601,7 +644,7 @@ namespace TSBStart
             {
                 webBg.CoreWebView2.AddHostObjectToScript("host", new HostObject()); //向网页注册回调函数
 
-                loginByWeb();
+                web_login();
             }
         }
 
@@ -655,8 +698,10 @@ namespace TSBStart
             }
         }
 
-       
-
-
+        private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // 实现窗口拖动
+            this.DragMove();
+        }
     }
 }

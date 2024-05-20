@@ -20,5 +20,20 @@ namespace TSBStart
            
         }
 
+        public void MinWindow()
+        {
+           
+        }
+
+        public void CloseWindow()
+        {
+
+        }
+
+        public void btnStartOrUpdate_Click()
+        {
+
+        }
+
     }
 }

@@ -5,9 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TSBStart"
         mc:Ignorable="d"
-        Title="新天上碑登录器" Height="700" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" >
+        Title="新天上碑登录器" Height="800" Width="1340" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing"
+        
+        
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        
+        >
 
     <Grid>
+        <Image Source="pack://application:,,,/Resources/bg.png" Stretch="Fill"/>
+
         <DockPanel LastChildFill="True" >
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <Button x:Name="btnTest" Click="btnTest_Click" Visibility="Hidden">功能测试</Button>
@@ -25,7 +36,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Button  Grid.Row="0" Grid.Column="0"  Name="btnStartOrUpdate" Click="btnStartOrUpdate_Click" FontSize="20" Margin="30,0,20,30" Grid.RowSpan="2">开始游戏</Button>
+                    <Button  Grid.Row="0" Grid.Column="0"  Name="btnStartOrUpdate" Click="btnStartOrUpdate_Click" FontSize="20" Margin="30,0,20,30" Grid.RowSpan="2" Visibility="Hidden">开始游戏</Button>
 
                     <Label Grid.Row="0" Grid.Column="1" Content="" Name="labInfo" Margin="5,0,20,0" MaxWidth="14cm"></Label>
                     <ProgressBar Grid.Row="1" Grid.Column="1" Name="m_progress" Width="14cm" Height="0.5cm" Margin="5,0,20,30"  ></ProgressBar>
@@ -35,7 +46,9 @@
 
             </StackPanel>
             <Grid>
-                <Wpf:WebView2 Name="webBg"/>
+
+           
+                <Wpf:WebView2 Name="webBg" Margin="400,130,80,50"/>
             </Grid>
 
         </DockPanel>
