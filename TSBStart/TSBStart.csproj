@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Downloader" Version="3.0.6" />
     <PackageReference Include="ini-parser" Version="2.5.2" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
     <PackageReference Include="Win32" Version="1.1.6" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
@@ -30,6 +31,8 @@
   <ItemGroup>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
 
   <ItemGroup>

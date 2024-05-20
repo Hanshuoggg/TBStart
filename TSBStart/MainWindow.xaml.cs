@@ -592,6 +592,11 @@ namespace TSBStart
 
             }
             checkGameExeExists();
+
+            webBg.Source =new Uri( m_cfg.AccountVerifyUrl);
+            
+
+
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
@@ -644,5 +649,6 @@ namespace TSBStart
             }
         }
 
+     
     }
 }
