@@ -117,6 +117,7 @@ namespace TSBStart
         {
             btnStartOrUpdate.Content = "开始游戏";
             if (aPatchTimer != null) aPatchTimer.Stop();
+
         }
 
         private void UpdateUIForGameStart()
@@ -124,6 +125,10 @@ namespace TSBStart
             btnStartOrUpdate.Content = "开始游戏";
             btnStartOrUpdate.IsEnabled = true;
             if (aPatchTimer != null) aPatchTimer.Stop();
+
+            m_js.set_btn_enable(1); //启用网页中按钮
+            m_js.set_game_ready(1); //游戏环境就绪
+
         }
 
         private void StartPatchIfRequired()
@@ -143,6 +148,11 @@ namespace TSBStart
                 btnStartOrUpdate.Content = "开始游戏";
                 btnStartOrUpdate.IsEnabled = true;
                 if (aPatchTimer != null) aPatchTimer.Stop();
+
+                m_js.set_btn_enable(1); //启用网页中按钮
+                m_js.set_game_ready(1); //游戏环境就绪
+
+
             }
         }
 
@@ -192,6 +202,8 @@ namespace TSBStart
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)delegate
             {
                 labInfo.Content = testText;
+
+                m_js.set_progress_info(testText);
             });
         }
 
@@ -371,8 +383,9 @@ namespace TSBStart
                 this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)delegate
                 {
                     labInfo.Content = "安装完成";
-                    //btnStartOrUpdate.Content = "开始游戏";
                     btnStartOrUpdate.IsEnabled = true;
+
+                    m_js.set_progress_info("安装完成");
                 });
             }
             catch(Exception ex)
@@ -386,6 +399,8 @@ namespace TSBStart
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)delegate
             {
                 labInfo.Content = string.Format("正在解压文件:{0}...，请耐心等待",sfilename);
+
+                m_js.set_progress_info(labInfo.Content.ToString());
             });
         }
 
@@ -507,6 +522,9 @@ namespace TSBStart
                 labInfo.Content = s;
 
                 m_progress.Value = e.ProgressPercentage;
+
+                m_js.set_progress_num((int)e.ProgressPercentage);
+                m_js.set_progress_info(s);
             });
 
         }
@@ -533,6 +551,7 @@ namespace TSBStart
                 if(File.Exists(sGameExe)==false) {
 
                     btnStartOrUpdate.Content = "开始安装";
+                    m_js.set_btn_enable(1); //启用网页中按钮
 
                 }
                 else
@@ -541,6 +560,8 @@ namespace TSBStart
                     TryConnectPatchServer();
                     btnStartOrUpdate.Content = m_sConnServerTip;
                     //需要升级
+
+                    m_js.set_progress_info(m_sConnServerTip);
                 }
             }
             catch(Exception ex)
@@ -562,18 +583,19 @@ namespace TSBStart
             return m_tool.verifyLogin(m_cfg.Account, m_cfg.Password);
         }
      
+        private JSFunc m_js=null;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             m_progress.Visibility = Visibility.Hidden;
             m_z7.Extracting += M_z7_Extracting;
 
-            checkGameExeExists();
-
+            m_js = new JSFunc(webBg);
             webBg.EnsureCoreWebView2Async();
             webBg.CoreWebView2InitializationCompleted += WebBg_CoreWebView2InitializationCompleted;
             webBg.NavigationCompleted += WebBg_NavigationCompleted;
 
 
+            checkGameExeExists();
 
         }
 
@@ -589,54 +611,6 @@ namespace TSBStart
             }
         }
 
-        private async void web_setButtonText(string sText)
-        {
-            await webBg.EnsureCoreWebView2Async(null); // 确保WebView2已加载
-
-            try
-            {
-                //拼接js code
-                string js = String.Format("return set_btn_text({0});", sText);
-                // 执行JavaScript代码并获取结果
-                string result = await webBg.ExecuteScriptAsync(js);
-                // 处理结果
-                MessageBox.Show(result);
-
-                if (result.Trim().Length >= 1 && result.Trim()[0] == '1')
-                {
-
-                }
-            }
-            catch (Exception ex)
-            {
-                // 处理异常
-                MessageBox.Show(ex.Message);
-            }
-        }
-        private async void web_login()
-        {
-            await webBg.EnsureCoreWebView2Async(null); // 确保WebView2已加载
-
-            try
-            {
-                //拼接js code
-                string js = String.Format("return login({0},{1});",m_cfg.Account,m_cfg.Password);
-                // 执行JavaScript代码并获取结果
-                string result = await webBg.ExecuteScriptAsync(js);
-                // 处理结果
-                MessageBox.Show(result);
-
-                if(result.Trim().Length>=1 && result.Trim()[0]=='1')
-                {
-                   
-                }
-            }
-            catch (Exception ex)
-            {
-                // 处理异常
-                MessageBox.Show(ex.Message);
-            }
-        }
 
         private void WebBg_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
@@ -644,7 +618,8 @@ namespace TSBStart
             {
                 webBg.CoreWebView2.AddHostObjectToScript("host", new HostObject(this)); //向网页注册回调函数
 
-                web_login();
+                //网页加载完成后，默认禁用网页中按钮
+                m_js.set_btn_enable(0);
             }
         }
 

@@ -1,14 +1,14 @@
 一，API定义：
 1.1，网页中需提供javascript function 供外部wpf调用的:
 
-//通知网页当前游戏环境状态 -1未就绪， 1就绪
+//通知网页当前游戏环境状态 0未就绪， 1就绪
 void set_game_ready(int iready);
 
 //设置网页中按钮状态,0 禁用，1启用
-void set_btn_enable(istate);
+void set_btn_enable(int ienable);
 
 //设置进度文本信息
-void set_progress_info(stip)
+void set_progress_info(string stip)
 
 //设置当前进度 0 -100
 void set_progress_num(int inum);
