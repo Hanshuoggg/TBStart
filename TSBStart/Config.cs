@@ -48,6 +48,15 @@ namespace TSBStart
                 else
                     return null;
             }
+
+            set
+            {
+                if (m_ini != null)
+                {
+                    m_ini.Sections["GAME OPTION"]["First_Download_Url"] = value;
+                }
+            }
+
         }
 
         public string? Inst_Dir

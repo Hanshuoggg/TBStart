@@ -40,7 +40,6 @@ namespace TSBStart
         {
             MainWindow.m_cfg.Account = username;
             MainWindow.m_cfg.Password = pwd;
-
             MainWindow.m_cfg.saveConfig();
 
            
@@ -62,6 +61,16 @@ namespace TSBStart
         {
             string scpuid= OS.GetCPUSerialNumber();
             return scpuid;
+        }
+
+        public void set_download_url(string url)
+        {
+            if (null == url || url.Trim().Length <= 0)
+                return;
+
+            MainWindow.m_cfg.First_Download_Url = url;
+            MainWindow.m_cfg.saveConfig();
+
         }
 
         public void btnStartOrUpdate_Click()

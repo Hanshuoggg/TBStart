@@ -1,7 +1,5 @@
 网页中需提供javascript function 供外部wpf调用的:
 
-//传入用户名，密码，登录成功返回1，失败返回0
-int login(username,pwd) 
 
 //设置网页中按钮标题
 void set_btn_text(stext);
