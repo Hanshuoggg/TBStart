@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,12 +25,19 @@ namespace TSBStart
         //游戏是否存在,存在返回1，不存在返回0
         public int existGame()
         {
-            return 0;
+            string sGameExe = MainWindow.m_cfg.GameExePath;
+            if (File.Exists(sGameExe) == false)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
 
         }
         public void startGame(String username, String pwd)
         {
-            MessageBox.Show("登录成功,用户名:" + username + " 密码:" + pwd);
             MainWindow.m_cfg.Account = username;
             MainWindow.m_cfg.Password = pwd;
 
@@ -40,26 +48,26 @@ namespace TSBStart
 
         public void MinWindow()
         {
-            MessageBox.Show("最小化");
             if(m_mainFrm!=null)
                 m_mainFrm.WindowState=System.Windows.WindowState.Minimized;
         }
 
         public void CloseWindow()
         {
-            MessageBox.Show("关闭");
             if (m_mainFrm != null)
                 m_mainFrm.Close();
         }
 
         public string appGetUuid()
         {
-            return "abc";
+            string scpuid= OS.GetCPUSerialNumber();
+            return scpuid;
         }
 
         public void btnStartOrUpdate_Click()
         {
-
+            if (m_mainFrm != null)
+                m_mainFrm.btnStartOrUpdate_Click(null, null);
         }
 
 

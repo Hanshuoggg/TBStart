@@ -240,7 +240,7 @@ namespace TSBStart
             });
         }
 
-        private void btnStartOrUpdate_Click(object sender, RoutedEventArgs e)
+        public void btnStartOrUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
