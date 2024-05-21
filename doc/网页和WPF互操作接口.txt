@@ -1,25 +1,20 @@
-网页中需提供javascript function 供外部wpf调用的:
+一，API定义：
+1.1，网页中需提供javascript function 供外部wpf调用的:
 
-
-//设置网页中按钮标题
-void set_btn_text(stext);
+//通知网页当前游戏环境状态 -1未就绪， 1就绪
+void set_game_ready(int iready);
 
 //设置网页中按钮状态,0 禁用，1启用
 void set_btn_enable(istate);
 
-//设置进度提示信息
+//设置进度文本信息
 void set_progress_info(stip)
 
-//设置当前进度
-void set_progress_num(inum);
-
-//获取下载游戏url
-string get_game_download_url()
+//设置当前进度 0 -100
+void set_progress_num(int inum);
 
 
-
-
-外部通过webivew2提供给网页javascript调用的（可假定已经实现直接调用）：
+1.2，WPF通过webivew2提供给网页javascript调用的（可假定已经实现直接调用）：
 
 //网页登录成功后给通知
 window.chrome.webview.host.LoginOK();
@@ -44,3 +39,36 @@ window.chrome.webview.host.appGetUuid();
 
 //由网页中按钮调用触发外部按钮事件（外部按钮隐藏）。 除登录外， 均应调用。  
 window.chrome.webview.host.btnStartOrUpdate_Click();
+
+
+二，网页中调用示例：
+
+2.1，下载安装游戏
+window.chrome.webview.host.set_download_url(url);
+window.chrome.webview.host.btnStartOrUpdate_Click();
+
+2.2，开始游戏
+window.chrome.webview.host.startGame( username,  pwd);
+window.chrome.webview.host.btnStartOrUpdate_Click();
+
+
+三，WPF中调用示例：
+3.1，程序启动
+程序启动加载网页后 set_btn_enable(0) 禁用网页按钮
+if 游戏不存在 then set_btn_enable(1) 启用网页按钮
+if 游戏存在 and 自动升级完成 then set_btn_enable(1) 启用网页按钮
+
+3.2，开始下载
+ set_btn_enable(0) 禁用网页按钮
+if 下载完成 and 升级完成
+{
+	set_btn_enable(1); 启用网页按钮
+	 set_game_ready(1); 游戏环境就绪
+}
+
+3.3，下载过程
+while()
+{
+	set_progress_num(34);
+	 set_progress_info("当前解压文件:xxx.dat...");
+}
